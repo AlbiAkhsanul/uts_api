@@ -22,7 +22,31 @@ class UpdateProjectRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'nama_proyek' => 'required|string|max:155',
+            'estimasi_proyek' => 'required|integer',
+            'project_partner' => 'required|exists:partners,id',
+            'jenis_proyek' => 'required|array',
+            'jenis_proyek.*' => 'exists:project_types,id',
+            'lokasi_proyek' => 'required|string|max:255',
+            'pengajuan_kebutuhan_material' => 'in:pending,ditolak,diterima',
+            'inspeksi_logistik' => 'in:pending,ditolak,diterima',
+            'ajuan_upahan' => 'in:pending,ditolak,diterima',
+            'progres_proyek' => 'in:0%,25%,50%,75%,100%',
+            'status_proyek' => 'in:pending,berjalan,berhenti,selesai',
         ];
+    }
+
+    /**
+     * Mengubah data sebelum validasi.
+     */
+    protected function prepareForValidation()
+    {
+        $this->merge([
+            'pengajuan_kebutuhan_material' => $this->pengajuan_kebutuhan_material ?? 'pending',
+            'inspeksi_logistik' => $this->inspeksi_logistik ?? 'pending',
+            'ajuan_upahan' => $this->ajuan_upahan ?? 'pending',
+            'progres_proyek' => $this->progres_proyek ?? '0%',
+            'status_proyek' => $this->status_proyek ?? 'pending',
+        ]);
     }
 }

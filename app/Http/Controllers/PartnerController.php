@@ -13,7 +13,8 @@ class PartnerController extends Controller
      */
     public function index()
     {
-        //
+        $partners = Partner::all();
+        return response()->json($partners);
     }
 
     /**
@@ -29,15 +30,20 @@ class PartnerController extends Controller
      */
     public function store(StorePartnerRequest $request)
     {
-        //
+        $validatedData = $request->validated();
+
+        $partner = Partner::create($validatedData);
+
+        return response()->json(['message' => 'Mitra berhasil ditambahkan', 'data' => $partner], 201);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Partner $partner)
+    public function show($id)
     {
-        //
+        $partner = Partner::findOrFail($id);
+        return response()->json($partner);
     }
 
     /**
@@ -53,14 +59,45 @@ class PartnerController extends Controller
      */
     public function update(UpdatePartnerRequest $request, Partner $partner)
     {
-        //
+        $validatedData = $request->validated();
+
+        $partner->update($validatedData);
+
+        return response()->json(['message' => 'Mitra berhasil diperbarui', 'data' => $partner]);
     }
+
 
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(Partner $partner)
     {
-        //
+        $partner->delete();
+
+        return response()->json([
+            'message' => 'Mitra berhasil dihapus'
+        ]);
+    }
+
+    /**
+     * Restore soft delete.
+     */
+    public function restore($id)
+    {
+        $partner = Partner::withTrashed()->findOrFail($id);
+        $partner->restore();
+
+        return response()->json(['message' => 'Mitra berhasil direstore']);
+    }
+
+    /**
+     * Permanently delete.
+     */
+    public function forceDelete($id)
+    {
+        $partner = Partner::onlyTrashed()->findOrFail($id);
+        $partner->forceDelete();
+
+        return response()->json(['message' => 'Mitra dihapus secara permanen']);
     }
 }

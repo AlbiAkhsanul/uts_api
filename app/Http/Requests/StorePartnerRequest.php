@@ -22,7 +22,10 @@ class StorePartnerRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'nama_partner' => 'required|string|max:255',
+            'negara_asal' => 'required|string|max:2',
+            'email' => 'required|email|unique:partners,email',
+            'no_telepon' => 'required|string|max:20',
         ];
     }
 }

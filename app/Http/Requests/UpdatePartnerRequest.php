@@ -19,10 +19,13 @@ class UpdatePartnerRequest extends FormRequest
      *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
-    public function rules(): array
+    public function rules()
     {
         return [
-            //
+            'nama_partner' => 'sometimes|required|string|max:255',
+            'negara_asal' => 'sometimes|required|string|max:2',
+            'email' => 'sometimes|required|email|unique:partners,email,' . $this->route('partner'),
+            'no_telepon' => 'sometimes|required|string|max:20',
         ];
     }
 }
