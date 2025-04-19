@@ -14,9 +14,9 @@ class PartnerSeeder extends Seeder
     public function run(): void
     {
         $partners = [
-            ['nama_partner' => 'PT. Karya Bangun', 'negara_asal' => 'ID'],
-            ['nama_partner' => 'Global Build Co.', 'negara_asal' => 'SG'],
-            ['nama_partner' => 'TechnoArch Design', 'negara_asal' => 'MY'],
+            ['nama_partner' => 'PT. Karya Bangun', 'negara_asal' => 'ID', 'email' => 'karyabangun54@gmail.com', 'no_telepon' => '081559596145'],
+            ['nama_partner' => 'Global Build Co.', 'negara_asal' => 'SG', 'email' => 'globuild11@gmail.com', 'no_telepon' => '081559596127'],
+            ['nama_partner' => 'TechnoArch Design', 'negara_asal' => 'MY', 'email' => 'technoarch23@gmail.com', 'no_telepon' => '081559596188'],
         ];
 
         foreach ($partners as $partner) {

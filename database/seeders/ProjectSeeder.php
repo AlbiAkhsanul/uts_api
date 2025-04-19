@@ -14,7 +14,6 @@ class ProjectSeeder extends Seeder
      */
     public function run(): void
     {
-        // Pastikan jenis proyek sudah ada
         $types = [
             'Konstruksi',
             'Arsitek dan Desain',
@@ -28,8 +27,14 @@ class ProjectSeeder extends Seeder
         // Buat 1 contoh proyek
         $project = Project::create([
             'nama_proyek' => 'Gedung Baru XYZ',
-            'estimasi_lama_proyek' => 180,
-            'project_partner' => 1,
+            'estimasi_lama_proyek' => 26,
+            'project_partner' => 2,
+            'lokasi_proyek' => 'jogjakarta',
+            'pengajuan_kebutuhan_material' => 'diterima',
+            'inspeksi_logistik' => 'pending',
+            'ajuan_upahan' => 'ditolak',
+            'progres_proyek' => '25%',
+            'status_proyek' => 'pending',
         ]);
 
         // Hubungkan ke jenis proyek (misalnya 1, 2)
