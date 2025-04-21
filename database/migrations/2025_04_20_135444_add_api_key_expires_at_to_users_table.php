@@ -12,7 +12,8 @@ return new class extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->string('api_key')->nullable()->unique();
+            $table->string('api_key', 24)->nullable()->unique();
+            $table->timestamp('api_key_expires_at')->nullable();
         });
     }
 
@@ -22,7 +23,7 @@ return new class extends Migration
     public function down()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn('api_key');
+            $table->dropColumn(['api_key', 'api_key_expires_at']);
         });
     }
 };

@@ -14,7 +14,7 @@ class PartnerController extends Controller
     public function index()
     {
         $partners = Partner::all();
-        return response()->json($partners);
+        return response()->json($partners, 200);
     }
 
     /**
@@ -43,7 +43,7 @@ class PartnerController extends Controller
     public function show($id)
     {
         $partner = Partner::findOrFail($id);
-        return response()->json($partner);
+        return response()->json($partner, 200);
     }
 
     /**
@@ -63,7 +63,7 @@ class PartnerController extends Controller
 
         $partner->update($validatedData);
 
-        return response()->json(['message' => 'Mitra berhasil diperbarui', 'data' => $partner]);
+        return response()->json(['message' => 'Mitra berhasil diperbarui', 'data' => $partner], 200);
     }
 
 
@@ -76,7 +76,7 @@ class PartnerController extends Controller
 
         return response()->json([
             'message' => 'Mitra berhasil dihapus'
-        ]);
+        ], 200);
     }
 
     /**
@@ -87,7 +87,7 @@ class PartnerController extends Controller
         $partner = Partner::withTrashed()->findOrFail($id);
         $partner->restore();
 
-        return response()->json(['message' => 'Mitra berhasil direstore']);
+        return response()->json(['message' => 'Mitra berhasil direstore'], 200);
     }
 
     /**
@@ -98,6 +98,6 @@ class PartnerController extends Controller
         $partner = Partner::onlyTrashed()->findOrFail($id);
         $partner->forceDelete();
 
-        return response()->json(['message' => 'Mitra dihapus secara permanen']);
+        return response()->json(['message' => 'Mitra dihapus secara permanen'], 200);
     }
 }

@@ -5,18 +5,29 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
+use App\Models\User;
+
 
 class ApiKeyMiddleware
 {
-    public function handle(Request $request, Closure $next)
+    public function handle($request, Closure $next)
     {
-        // Ambil API key dari header
-        $apiKey = $request->header('API-Key');
+        $apiKey = $request->header('Authorization');
 
-        // Cek apakah API key valid
-        if ($apiKey !== env('API_KEY')) {
-            return response()->json(['message' => 'Unauthorized'], Response::HTTP_UNAUTHORIZED);
+        if ($apiKey && str_starts_with($apiKey, 'Bearer ')) {
+            $apiKey = substr($apiKey, 7); // hapus "Bearer "
         }
+
+        $user = \App\Models\User::where('api_key', $apiKey)
+            ->where('api_key_expires_at', '>', now())
+            ->first();
+
+        if (!$user) {
+            return response()->json(['message' => 'Unauthorized'], 401);
+        }
+
+        // Simpan user ke request (jika perlu)
+        $request->merge(['auth_user' => $user]);
 
         return $next($request);
     }

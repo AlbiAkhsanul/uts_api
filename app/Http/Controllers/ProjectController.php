@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Project;
 use App\Http\Requests\StoreProjectRequest;
 use App\Http\Requests\UpdateProjectRequest;
+use App\Http\Resources\ProjectResource;
+use Illuminate\Http\Request;
+
 
 class ProjectController extends Controller
 {
@@ -15,10 +18,24 @@ class ProjectController extends Controller
     {
         $projects = Project::with('types', 'partner')->get();
 
+        $projects = $projects->map(function ($project) {
+            return [
+                'id' => $project->id,
+                'nama_proyek' => $project->nama_proyek,
+                'lokasi_proyek' => $project->lokasi_proyek,
+                'status_proyek' => $project->status_proyek,
+                'types' => $project->types->pluck('nama_jenis_proyek'), // hanya ambil nama
+                'partner' => $project->partner ? [
+                    'nama_partner' => $project->partner->nama_partner,
+                    'negara_asal' => $project->partner->negara_asal,
+                ] : null,
+            ];
+        });
+
         return response()->json([
             'message' => 'Daftar semua proyek',
             'data' => $projects
-        ]);
+        ], 200);
     }
 
 
@@ -41,7 +58,10 @@ class ProjectController extends Controller
 
         $project->types()->sync($validatedData['jenis_proyek']);
 
-        return response()->json(['message' => 'Proyek berhasil ditambahkan', 'data' => $project], 201);
+        return response()->json([
+            'message' => 'Proyek berhasil ditambahkan',
+            'data' => new ProjectResource($project)
+        ], 201);
     }
 
     /**
@@ -53,8 +73,8 @@ class ProjectController extends Controller
 
         return response()->json([
             'message' => 'Detail proyek ditemukan',
-            'data' => $project
-        ]);
+            'data' => new ProjectResource($project)
+        ], 200);
     }
 
     /**
@@ -76,7 +96,10 @@ class ProjectController extends Controller
 
         $project->types()->sync($validatedData['jenis_proyek']);
 
-        return response()->json(['message' => 'Proyek berhasil diperbarui', 'data' => $project], 200);
+        return response()->json([
+            'message' => 'Proyek berhasil diperbarui',
+            'data' => new ProjectResource($project)
+        ], 200);
     }
 
     /**
@@ -88,7 +111,7 @@ class ProjectController extends Controller
 
         return response()->json([
             'message' => 'Proyek berhasil dihapus'
-        ]);
+        ], 200);
     }
 
     /**
@@ -99,7 +122,7 @@ class ProjectController extends Controller
         $project = Project::withTrashed()->findOrFail($id);
         $project->restore();
 
-        return response()->json(['message' => 'Proyek berhasil direstore']);
+        return response()->json(['message' => 'Proyek berhasil direstore'], 200);
     }
 
     /**
@@ -110,6 +133,6 @@ class ProjectController extends Controller
         $project = Project::onlyTrashed()->findOrFail($id);
         $project->forceDelete();
 
-        return response()->json(['message' => 'Project dihapus secara permanen']);
+        return response()->json(['message' => 'Project dihapus secara permanen'], 200);
     }
 }

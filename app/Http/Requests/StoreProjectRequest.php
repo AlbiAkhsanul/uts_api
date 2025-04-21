@@ -11,7 +11,7 @@ class StoreProjectRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -23,7 +23,7 @@ class StoreProjectRequest extends FormRequest
     {
         return [
             'nama_proyek' => 'required|string|max:155',
-            'estimasi_proyek' => 'required|integer',
+            'estimasi_lama_proyek' => 'required|integer',
             'project_partner' => 'required|exists:partners,id',
             'jenis_proyek' => 'required|array',
             'jenis_proyek.*' => 'exists:project_types,id',
@@ -33,6 +33,7 @@ class StoreProjectRequest extends FormRequest
             'ajuan_upahan' => 'in:pending,ditolak,diterima',
             'progres_proyek' => 'in:0%,25%,50%,75%,100%',
             'status_proyek' => 'in:pending,berjalan,berhenti,selesai',
+            'partner_id' => 'required|exists:partners,id',
         ];
     }
 
@@ -48,5 +49,12 @@ class StoreProjectRequest extends FormRequest
             'progres_proyek' => $this->progres_proyek ?? '0%',
             'status_proyek' => $this->status_proyek ?? 'pending',
         ]);
+    }
+
+    public function messages()
+    {
+        return [
+            'partner_id.exists' => 'Partner tidak ditemukan.',
+        ];
     }
 }
