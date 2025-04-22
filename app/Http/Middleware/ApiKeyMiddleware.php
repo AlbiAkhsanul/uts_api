@@ -18,7 +18,7 @@ class ApiKeyMiddleware
             $apiKey = substr($apiKey, 7); // hapus "Bearer "
         }
 
-        $user = \App\Models\User::where('api_key', $apiKey)
+        $user = User::where('api_key', $apiKey)
             ->where('api_key_expires_at', '>', now())
             ->first();
 

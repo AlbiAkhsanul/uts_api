@@ -11,7 +11,7 @@ class UpdatePartnerRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,10 +22,10 @@ class UpdatePartnerRequest extends FormRequest
     public function rules()
     {
         return [
-            'nama_partner' => 'sometimes|required|string|max:255',
-            'negara_asal' => 'sometimes|required|string|max:2',
-            'email' => 'sometimes|required|email|unique:partners,email,' . $this->route('partner'),
-            'no_telepon' => 'sometimes|required|string|max:20',
+            'nama_partner' => 'required|string',
+            'negara_asal' => 'required|string',
+            'email' => 'required|email',
+            'no_telepon' => 'required|string',
         ];
     }
 }

@@ -24,11 +24,9 @@ class ProjectController extends Controller
                 'nama_proyek' => $project->nama_proyek,
                 'lokasi_proyek' => $project->lokasi_proyek,
                 'status_proyek' => $project->status_proyek,
-                'types' => $project->types->pluck('nama_jenis_proyek'), // hanya ambil nama
-                'partner' => $project->partner ? [
-                    'nama_partner' => $project->partner->nama_partner,
-                    'negara_asal' => $project->partner->negara_asal,
-                ] : null,
+                'types' => $project->types->pluck('nama_jenis_proyek'),
+                'nama_partner' => $project->partner->nama_partner,
+                'negara_asal' => $project->partner->negara_asal,
             ];
         });
 

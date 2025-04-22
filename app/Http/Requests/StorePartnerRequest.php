@@ -11,7 +11,7 @@ class StorePartnerRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -19,13 +19,13 @@ class StorePartnerRequest extends FormRequest
      *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
-    public function rules(): array
+    public function rules()
     {
         return [
-            'nama_partner' => 'required|string|max:255',
-            'negara_asal' => 'required|string|max:2',
-            'email' => 'required|email|unique:partners,email',
-            'no_telepon' => 'required|string|max:20',
+            'nama_partner' => 'required|string',
+            'negara_asal' => 'required|string',
+            'email' => 'required|email',
+            'no_telepon' => 'required|string',
         ];
     }
 }

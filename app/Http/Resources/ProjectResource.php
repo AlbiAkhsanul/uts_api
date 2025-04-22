@@ -24,8 +24,14 @@ class ProjectResource extends JsonResource
             'ajuan_upahan' => $this->ajuan_upahan,
             'progres_proyek' => $this->progres_proyek,
             'status_proyek' => $this->status_proyek,
-            'types' => $this->types->pluck('nama_jenis_proyek'),
+            'jenis_proyek' => $this->types->map(function ($type) {
+                return [
+                    'id' => $type->id,
+                    'nama_jenis_proyek' => $type->nama_jenis_proyek,
+                ];
+            }),
             'partner' => $this->partner ? [
+                'id' => $this->partner->id,
                 'nama_partner' => $this->partner->nama_partner,
                 'negara_asal' => $this->partner->negara_asal,
             ] : null,

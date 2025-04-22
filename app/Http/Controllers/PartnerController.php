@@ -14,7 +14,10 @@ class PartnerController extends Controller
     public function index()
     {
         $partners = Partner::all();
-        return response()->json($partners, 200);
+        return response()->json([
+            'message' => 'Daftar semua mitra',
+            'data' => $partners
+        ], 200);
     }
 
     /**
@@ -32,6 +35,8 @@ class PartnerController extends Controller
     {
         $validatedData = $request->validated();
 
+        $validatedData['negara_asal'] = strtoupper($validatedData['negara_asal']);
+
         $partner = Partner::create($validatedData);
 
         return response()->json(['message' => 'Mitra berhasil ditambahkan', 'data' => $partner], 201);
@@ -43,7 +48,10 @@ class PartnerController extends Controller
     public function show($id)
     {
         $partner = Partner::findOrFail($id);
-        return response()->json($partner, 200);
+        return response()->json([
+            'message' => 'Detail partner ditemukan',
+            'data' => $partner
+        ], 200);
     }
 
     /**
@@ -60,6 +68,8 @@ class PartnerController extends Controller
     public function update(UpdatePartnerRequest $request, Partner $partner)
     {
         $validatedData = $request->validated();
+
+        $validatedData['negara_asal'] = strtoupper($validatedData['negara_asal']);
 
         $partner->update($validatedData);
 

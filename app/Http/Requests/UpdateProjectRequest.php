@@ -33,7 +33,6 @@ class UpdateProjectRequest extends FormRequest
             'ajuan_upahan' => 'in:pending,ditolak,diterima',
             'progres_proyek' => 'in:0%,25%,50%,75%,100%',
             'status_proyek' => 'in:pending,berjalan,berhenti,selesai',
-            'partner_id' => 'required|exists:partners,id',
         ];
     }
 
