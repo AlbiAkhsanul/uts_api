@@ -45,8 +45,6 @@ class PartnerWebController extends Controller
             'no_telepon' => $request->no_telepon,
         ]);
 
-        dd($response->status(), $response->body());
-
         if ($response->successful()) {
             return redirect()->route('partners.index')->with('success', 'partner berhasil ditambahkan melalui API.');
         }

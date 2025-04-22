@@ -33,7 +33,7 @@
                             <form action="{{ route('partners.destroy', $partner['id']) }}" method="POST" class="d-inline">
                                 @csrf
                                 @method('DELETE')
-                                <button class="btn btn-danger btn-sm" onclick="return confirm('Apakah anda yakin ingin menghapus proyek ini?')">
+                                <button class="btn btn-danger btn-sm" onclick="return confirm('Apakah anda yakin ingin menghapus mitra ini?')">
                                     <i class="bi bi-trash3-fill"></i>
                                 </button>
                             </form>                            

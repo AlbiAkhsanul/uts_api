@@ -39,7 +39,7 @@
                     </div>
         
                     <button type="submit" style="background-color: #2563eb !important; color: white !important;" class="text-white font-semibold px-4 py-2 rounded shadow">
-                        Tambah Proyek
+                        Tambah Mitra
                     </button>                                   
                 </form>
                 <script>
