@@ -5,6 +5,7 @@ use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Web\ProjectWebController;
 use App\Http\Controllers\Web\PartnerWebController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Models\Partner;
 
@@ -42,5 +43,10 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
+Route::get('/test', function () {
+    return 'You are logged in. User ID: ' . Auth::id();
+})->middleware('auth');
+
 
 require __DIR__ . '/auth.php';

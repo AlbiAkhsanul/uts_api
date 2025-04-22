@@ -41,7 +41,7 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        return redirect('/projects');
+        return redirect('/test');
     }
 
     /**
