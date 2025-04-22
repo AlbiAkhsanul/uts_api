@@ -6,7 +6,7 @@
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
                     <a href="{{ route('projects.index') }}">
-                        <img src="http://uts_api.test:90/storage/images/logo-crop.png" class="block h-9 w-auto fill-current text-gray-800">
+                        <img src="/public/storage/images/logo-crop.png" class="block h-9 w-auto fill-current text-gray-800">
                     </a>
                 </div>
 
