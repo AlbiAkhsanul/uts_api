@@ -44,9 +44,4 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::get('/test', function () {
-    return 'You are logged in. User ID: ' . Auth::id();
-})->middleware('auth');
-
-
 require __DIR__ . '/auth.php';
